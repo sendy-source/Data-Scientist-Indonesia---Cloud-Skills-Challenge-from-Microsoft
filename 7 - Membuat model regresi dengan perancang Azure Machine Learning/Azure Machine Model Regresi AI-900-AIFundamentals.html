@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<!-- saved from url=(0103)https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            AI-900-AIFundamentals
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/vs.min.css">
+        <script src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-white" href="https://docs.microsoft.com/training/">
+                <img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;">
+            </a>
+            <span class="my-1 title text-black">Microsoft Learn</span>
+            <span class="ml-2"><a href="https://microsoftlearning.github.io/AI-900-AIFundamentals">≡</a></span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/AI-900-AIFundamentals">
+                AI-900-AIFundamentals
+            </a>
+            <a href="https://github.com/MicrosoftLearning/AI-900-AIFundamentals" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#create-an-azure-machine-learning-workspace">Create an Azure Machine Learning workspace</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#create-compute">Create compute</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#create-a-pipeline-in-designer">Create a pipeline in Designer</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#add-and-explore-a-dataset">Add and explore a dataset</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#add-data-transformations">Add data transformations</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#run-the-pipeline">Run the pipeline</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#create-training-pipeline">Create training pipeline</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#run-the-training-pipeline">Run the training pipeline</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#evaluate-model">Evaluate model</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#create-and-run-an-inference-pipeline">Create and run an inference pipeline</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#deploy-model">Deploy model</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#deploy-a-service">Deploy a service</a></li><li class="nav-item"><a class="nav-link active" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#test-the-service">Test the service</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02a-create-regression-model.html#clean-up">Clean-up</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="explore-regression-with-azure-machine-learning-designer">Explore regression with Azure Machine Learning Designer</h1>
+
+<blockquote>
+  <p><strong>Note</strong>
+To complete this lab, you will need an <a href="https://azure.microsoft.com/free?azure-portal=true">Azure subscription</a> in which you have administrative access.</p>
+</blockquote>
+
+<p>In this exercise, you will train a regression model that predicts the price of an automobile based on its characteristics.</p>
+
+<h2 id="create-an-azure-machine-learning-workspace">Create an Azure Machine Learning workspace</h2>
+
+<ol>
+  <li>
+    <p>Sign into the <a href="https://portal.azure.com/?azure-portal=true">Azure portal</a> using your Microsoft credentials.</p>
+  </li>
+  <li>Select <strong>+ Create a resource</strong>, search for <em>Machine Learning</em>, and create a new <strong>Azure Machine Learning</strong> resource with an <em>Azure Machine Learning</em> plan. Use the following settings:
+    <ul>
+      <li><strong>Subscription</strong>: <em>Your Azure subscription</em>.</li>
+      <li><strong>Resource group</strong>: <em>Create or select a resource group</em>.</li>
+      <li><strong>Workspace name</strong>: <em>Enter a unique name for your workspace</em>.</li>
+      <li><strong>Region</strong>: <em>Select the closest geographical region</em>.</li>
+      <li><strong>Storage account</strong>: <em>Note the default new storage account that will be created for your workspace</em>.</li>
+      <li><strong>Key vault</strong>: <em>Note the default new key vault that will be created for your workspace</em>.</li>
+      <li><strong>Application insights</strong>: <em>Note the default new application insights resource that will be created for your workspace</em>.</li>
+      <li><strong>Container registry</strong>: None (<em>one will be created automatically the first time you deploy a model to a container</em>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Select <strong>Review + create</strong>, then select <strong>Create</strong>. Wait for your workspace to be created (it can take a few minutes), and then go to the deployed resource.</p>
+  </li>
+  <li>
+    <p>Select <strong>Launch studio</strong> (or open a new browser tab and navigate to <a href="https://ml.azure.com/?azure-portal=true">https://ml.azure.com</a>, and sign into Azure Machine Learning studio using your Microsoft account).</p>
+  </li>
+  <li>In Azure Machine Learning studio, you should see your newly created workspace. If that is not the case, click on <strong>Microsoft</strong> on the left-hand menu. Then from the new left-hand menu select <strong>Workspaces</strong>, where all the workspaces associated to your subscription are listed. Choose the one you created for this exercise.</li>
+</ol>
+
+<blockquote>
+  <p><strong>Note</strong>
+This module is one of many that make use of an Azure Machine Learning workspace, including the other modules in the <a href="https://docs.microsoft.com/learn/paths/create-no-code-predictive-models-azure-machine-learning/">Microsoft Azure AI Fundamentals: Explore visual tools for machine learning</a> learning path. If you are using your own Azure subscription, you may consider creating the workspace once and reusing it in other modules. Your Azure subscription will be charged a small amount for data storage as long as the Azure Machine Learning workspace exists in your subscription, so we recommend you delete the Azure Machine Learning workspace when it is no longer required.</p>
+</blockquote>
+
+<h2 id="create-compute">Create compute</h2>
+
+<ol>
+  <li>
+    <p>In <a href="https://ml.azure.com/?azure-portal=true">Azure Machine Learning studio</a>, select the three lines at the top left to view the various pages in the interface (you may need to maximize the size of your screen). You can use these pages in the left hand pane to manage the resources in your workspace. Select the <strong>Compute</strong> page (under <strong>Manage</strong>).</p>
+  </li>
+  <li>
+    <p>On the <strong>Compute</strong> page, select the <strong>Compute clusters</strong> tab, and add a new compute cluster with the following settings to train a machine learning model:</p>
+    <ul>
+      <li><strong>Location</strong>: <em>Select the same as your workspace. If that location is not listed, choose the one closest to you</em>.</li>
+      <li><strong>Virtual machine tier</strong>: Dedicated</li>
+      <li><strong>Virtual machine type</strong>: CPU</li>
+      <li><strong>Virtual machine size</strong>:
+        <ul>
+          <li>Choose <strong>Select from all options</strong></li>
+          <li>Search for and select <strong>Standard_DS11_v2</strong></li>
+        </ul>
+      </li>
+      <li>Select <strong>Next</strong></li>
+      <li><strong>Compute name</strong>: <em>enter a unique name</em></li>
+      <li><strong>Minimum number of nodes</strong>: 0</li>
+      <li><strong>Maximum number of nodes</strong>: 2</li>
+      <li><strong>Idle seconds before scale down</strong>: 120</li>
+      <li><strong>Enable SSH access</strong>: Clear</li>
+      <li>Select <strong>Create</strong></li>
+    </ul>
+  </li>
+</ol>
+
+<blockquote>
+  <p><strong>Note</strong>
+Compute instances and clusters are based on standard Azure virtual machine images. For this module, the <em>Standard_DS11_v2</em> image is recommended to achieve the optimal balance of cost and performance. If your subscription has a quota that does not include this image, choose an alternative image; but bear in mind that a larger image may incur higher cost and a smaller image may not be sufficient to complete the tasks. Alternatively, ask your Azure administrator to extend your quota.</p>
+</blockquote>
+
+<p>The compute cluster will take some time to be created. You can move onto the next step while you wait.</p>
+
+<h2 id="create-a-pipeline-in-designer">Create a pipeline in Designer</h2>
+
+<ol>
+  <li>
+    <p>In <a href="https://ml.azure.com/?azure-portal=true">Azure Machine Learning studio</a>, expand the left pane by selecting the three lines icon at the top left of the screen. View the <strong>Designer</strong> page (under <strong>Author</strong>), and select <strong>+</strong> to create a new pipeline.</p>
+  </li>
+  <li>
+    <p>At the top right-hand side of the screen, select <strong>Settings</strong>. If the <strong>Settings</strong> pane is not visible, select the wheel icon next to the pipeline name at the top.</p>
+  </li>
+  <li>
+    <p>In <strong>Settings</strong>, you must specify a compute target on which to run the pipeline. Under <strong>Select compute type</strong>, select <strong>Compute cluster</strong>. Then under <strong>Select Azure ML compute cluster</strong>, select the compute cluster you created previously.</p>
+  </li>
+  <li>
+    <p>In <strong>Settings</strong>, under <strong>Draft details</strong>, change the draft name (<strong>Pipeline-Created-on-<em>date</em></strong>) to <strong>Auto Price Training</strong>.</p>
+  </li>
+  <li>
+    <p>Select the <em>close icon</em> on the top right of the <strong>Settings</strong> pane to close the pane.</p>
+  </li>
+</ol>
+
+<p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/create-pipeline-help.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/create-pipeline-help.png" alt="Screenshot of the Machine Learning Studio Settings pane."></a></p>
+
+<h2 id="add-and-explore-a-dataset">Add and explore a dataset</h2>
+
+<p>Azure Machine Learning includes a sample dataset that you can use for your regression model.</p>
+
+<ol>
+  <li>
+    <p>Next to the pipeline name on the left, select the arrows icon to expand the panel if it is not already expanded. The panel should open by default to the <strong>Asset library</strong> pane, indicated by the books icon at the top of the panel. There is a search bar to locate assets on the pane and two buttons, <strong>Data</strong> and <strong>Component</strong>.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/designer-asset-library-components.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/designer-asset-library-components.png" alt="Screenshot of location of designer asset library, search bar, and component icon."></a></p>
+  </li>
+  <li>
+    <p>Click on <strong>Component</strong>. Search for and place the <strong>Automobile price data (Raw)</strong> dataset onto the canvas.</p>
+  </li>
+  <li>
+    <p>Right-click (Ctrl+click on a Mac) the <strong>Automobile price data (Raw)</strong> dataset on the canvas, and click on <strong>Preview data</strong>.</p>
+  </li>
+  <li>
+    <p>Review the <em>Dataset output</em> schema of the data, noting that you can see the distributions of the various columns as histograms.</p>
+  </li>
+  <li>
+    <p>Scroll to the right of the dataset until you see the <strong>Price</strong> column, which is the label that your model predicts.</p>
+  </li>
+  <li>
+    <p>Scroll back to the left and select the <strong>normalized-losses</strong> column header. Then review the statistics for this column. Note there are quite a few missing values in this column. Missing values  limit the column’s usefulness for predicting the <strong>price</strong> label so you might want to exclude it from training.</p>
+  </li>
+  <li>
+    <p>Close the <strong>Automobile price data (Raw) result visualization</strong> window so that you can see the dataset on the canvas like this:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/dataset.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/dataset.png" alt="Screenshot of the Automobile price data dataset on the designer canvas."></a></p>
+  </li>
+</ol>
+
+<h2 id="add-data-transformations">Add data transformations</h2>
+
+<p>You typically apply data transformations to prepare the data for modeling. In the case of the automobile price data, you add transformations to address the issues you identified when you explored the data.</p>
+
+<ol>
+  <li>
+    <p>In the <strong>Asset library</strong> pane on the left, click on <strong>Component</strong>, which contain a wide range of modules you can use for data transformation and model training. You can also use the search bar to quickly locate modules.</p>
+  </li>
+  <li>
+    <p>Search for a <strong>Select Columns in Dataset</strong> module and place it to the canvas, below the <strong>Automobile price data (Raw)</strong> module. Then connect the output at the bottom of the <strong>Automobile price data (Raw)</strong> module to the input at the top of the <strong>Select Columns in Dataset</strong> module, like this:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/dataset-select-columns.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/dataset-select-columns.png" alt="Screenshot of the Automobile price data dataset connected to the Select Columns in Dataset module."></a></p>
+  </li>
+  <li>
+    <p>Double click on the <strong>Select Columns in Dataset</strong> module to access a settings pane on the right. Select <strong>Edit column</strong>. Then in the <strong>Select columns</strong> window, select <strong>By name</strong> and <strong>Add all</strong> to add all the columns. Then remove <strong>normalized-losses</strong>, so your final column selection looks like this:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/select-columns.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/select-columns.png" alt="Screenshot of all columns other than normalized_losses."></a></p>
+  </li>
+  <li>
+    <p>Click on the <strong>Save</strong> button.</p>
+  </li>
+</ol>
+
+<p>In the rest of this exercise, you go through steps to create a pipeline that looks like this:</p>
+
+<p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/data-transforms.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/data-transforms.png" alt="Screenshot of the Automobile price data dataset with Normalize Data module."></a></p>
+
+<p>Follow the remaining steps, use the image for reference as you add and configure the required modules.</p>
+
+<ol>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for a <strong>Clean Missing Data</strong> module and place it under the <strong>Select Columns in Dataset</strong> module on the canvas. Then connect the output from the <strong>Select Columns in Dataset</strong> module to the input of the <strong>Clean Missing Data</strong> module.</p>
+  </li>
+  <li>
+    <p>Double click the <strong>Clean Missing Data</strong> module, and in the pane on the right, click <strong>Edit column</strong>. Then in the <strong>Columns to be cleaned</strong> window, select <strong>With rules</strong>, in the <strong>Include</strong> list select <strong>Column names</strong>, in the box of column names enter <strong>bore</strong>, <strong>stroke</strong>, and <strong>horsepower</strong> like this:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/clean-missing-values.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/clean-missing-values.png" alt="Screenshot of how bore, stroke, and horsepower columns are selected."></a></p>
+  </li>
+  <li>With the <strong>Clean Missing Data</strong> module still selected, in the pane on the right, set the following configuration settings:
+    <ul>
+      <li><strong>Minimum missing value ratio</strong>: 0.0</li>
+      <li><strong>Maximum missing value ratio</strong>: 1.0</li>
+      <li><strong>Cleaning mode</strong>: Remove entire row</li>
+    </ul>
+
+    <blockquote>
+      <p><strong>Tip</strong>
+If you view the statistics for the <strong>bore</strong>, <strong>stroke</strong>, and <strong>horsepower</strong> columns, you’ll see a number of missing values. These columns have fewer missing values than <strong>normalized-losses</strong>, so they might still be useful in predicting <strong>price</strong> once you exclude the rows where the values are missing from training.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for a <strong>Normalize Data</strong> module and place it on the canvas, below the <strong>Clean Missing Data</strong> module. Then connect the left-most output from the <strong>Clean Missing Data</strong> module to the input of the <strong>Normalize Data</strong> module.</p>
+  </li>
+  <li>Double click on the <strong>Normalize Data</strong> module to view its parameters pane. You will need to specify the transformation method and the columns to be transformed. Set the transformation method to <strong>MinMax</strong>. Apply a rule by selecting <strong>Edit column</strong> to include the following <strong>Column names</strong>:
+    <ul>
+      <li><strong>symboling</strong></li>
+      <li><strong>wheel-base</strong></li>
+      <li><strong>length</strong></li>
+      <li><strong>width</strong></li>
+      <li><strong>height</strong></li>
+      <li><strong>curb-weight</strong></li>
+      <li><strong>engine-size</strong></li>
+      <li><strong>bore</strong></li>
+      <li><strong>stroke</strong></li>
+      <li><strong>compression-ratio</strong></li>
+      <li><strong>horsepower</strong></li>
+      <li><strong>peak-rpm</strong></li>
+      <li><strong>city-mpg</strong></li>
+      <li><strong>highway-mpg</strong></li>
+    </ul>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/normalize-rules.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/normalize-rules.png" alt="Screenshot showing how all numeric columns other than price are selected."></a></p>
+
+    <blockquote>
+      <p><strong>Tip</strong>
+If you compare the values in the <strong>stroke</strong>, <strong>peak-rpm</strong>, and <strong>city-mpg</strong> columns, they are all measured in different scales, and it is possible that the larger values for <strong>peak-rpm</strong> might bias the training algorithm and create an over-dependency on this column compared to columns with lower values, such as <strong>stroke</strong>. Typically, data scientists mitigate this possible bias by <em>normalizing</em> the numeric columns so they’re on the similar scales.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="run-the-pipeline">Run the pipeline</h2>
+
+<p>To apply your data transformations, you must run the pipeline.</p>
+
+<ol>
+  <li>
+    <p>Ensure that your pipeline looks similar to this image:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/data-transforms.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/data-transforms.png" alt="Screenshot of dataset with data transformation modules."></a></p>
+  </li>
+  <li>
+    <p>Select <strong>Submit</strong>, and create a new experiment named <strong>mslearn-auto-training</strong> on your compute cluster.</p>
+  </li>
+  <li>
+    <p>Wait for the run to finish, which might take 5 minutes or more.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/completed-job.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/completed-job.png" alt="Screenshot of designer asset library with the completed job and job details button below."></a></p>
+
+    <p>Notice that the left hand panel is now on the <strong>Submitted Jobs</strong> pane. You will know when the run is complete because the status of the job will change to <strong>Completed</strong>.</p>
+  </li>
+  <li>
+    <p>When the run has completed, click on <strong>Job detail</strong>. A new tab will open, and you will see the components that have completed with check marks like this:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/normalize-complete.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/normalize-complete.png" alt="Screenshot of dataset with modules in completed job state."></a></p>
+  </li>
+</ol>
+
+<p>The dataset is now prepared for model training. Close the Job detail tab to return to the pipeline.</p>
+
+<h2 id="create-training-pipeline">Create training pipeline</h2>
+
+<p>After you’ve used data transformations to prepare the data, you can use it to train a machine learning model. Work through the following steps to extend the <strong>Auto Price Training</strong> pipeline.</p>
+
+<ol>
+  <li>
+    <p>Return to the <strong>Auto Price Training</strong> pipeline you created in the previous unit if it’s not already open.</p>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong> pane on the left, search for and place a <strong>Split Data</strong> module onto the canvas under the <strong>Normalize Data</strong> module. Then connect the <em>Transformed Dataset</em> (left) output of the <strong>Normalize Data</strong> module to the input of the <strong>Split Data</strong> module.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>
+Use the search bar to quickly locate modules.</p>
+    </blockquote>
+  </li>
+  <li>Double click on the <strong>Split Data</strong> module, and configure its settings as follows:
+    <ul>
+      <li><strong>Splitting mode</strong>: Split Rows</li>
+      <li><strong>Fraction of rows in the first output dataset</strong>: 0.7</li>
+      <li><strong>Randomized split</strong>: True</li>
+      <li><strong>Random seed</strong>: 123</li>
+      <li><strong>Stratified split</strong>: False</li>
+    </ul>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for and place a <strong>Train Model</strong> module to the canvas, under the <strong>Split Data</strong> module. Then connect the <em>Results dataset1</em> (left) output of the <strong>Split Data</strong> module to the <em>Dataset</em> (right) input of the <strong>Train Model</strong> module.</p>
+  </li>
+  <li>
+    <p>The model you are training will predict the <strong>price</strong> value, so select the <strong>Train Model</strong> module and modify its settings to set the <strong>Label column</strong> to  <strong>price</strong> (matching the case and spelling exactly!)</p>
+
+    <p>The <strong>price</strong> label the model will predict is a numeric value, so we need to train the model using a <em>regression</em> algorithm.</p>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for and place a <strong>Linear Regression</strong> module to the canvas, to the left of the <strong>Split Data</strong> module and above the <strong>Train Model</strong> module. Then connect its output to the <strong>Untrained model</strong> (left) input of the <strong>Train Model</strong> module.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>
+There are multiple algorithms you can use to train a regression model. For help choosing one, take a look at the <a href="https://aka.ms/mlcheatsheet?azure-portal=true">Machine Learning Algorithm Cheat Sheet for Azure Machine Learning designer</a>.</p>
+    </blockquote>
+
+    <p>To test the trained model, we need to use it to <em>score</em> the validation dataset we held back when we split the original data - in other words, predict labels for the features in the validation dataset.</p>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for and place a <strong>Score Model</strong> module to the canvas, below the <strong>Train Model</strong> module. Then connect the output of the <strong>Train Model</strong> module to the <strong>Trained model</strong> (left) input of the <strong>Score Model</strong> module; and drag the <strong>Results dataset2</strong> (right) output of the <strong>Split Data</strong> module to the <strong>Dataset</strong> (right) input of the <strong>Score Model</strong> module.</p>
+  </li>
+  <li>
+    <p>Ensure your pipeline looks like this image:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/train-score.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/train-score.png" alt="Screenshot of how to split data, then train with linear regression and score."></a></p>
+  </li>
+</ol>
+
+<h2 id="run-the-training-pipeline">Run the training pipeline</h2>
+
+<p>Now you’re ready to run the training pipeline and train the model.</p>
+
+<ol>
+  <li>
+    <p>Select <strong>Submit</strong>, and run the pipeline using the existing experiment named <strong>mslearn-auto-training</strong>.</p>
+  </li>
+  <li>
+    <p>The experiment run will take 5 minutes or more to complete. When the experiment run has completed, click on <strong>Job details</strong>. You will be taken to a new tab.</p>
+  </li>
+  <li>
+    <p>In the new window, right click on the <strong>Score Model</strong> module and select <strong>Preview data</strong> and then <strong>Scored dataset</strong> to view the results.</p>
+  </li>
+  <li>
+    <p>Scroll to the right, and note that next to the <strong>price</strong> column (which contains the known true values of the label) there is a new column named <strong>Scored Labels</strong>, which contains the predicted label values.</p>
+  </li>
+  <li>
+    <p>Close the <strong>Score Model result visualization</strong> tab.</p>
+  </li>
+</ol>
+
+<p>The model is predicting values for the <strong>price</strong> label, but how reliable are its predictions? To assess that, you need to evaluate the model.</p>
+
+<h2 id="evaluate-model">Evaluate model</h2>
+
+<p>One way to evaluate a regression model is to compare the predicted labels to the actual labels in the validation dataset to held back during training. Another way is to compare the performance of multiple models.</p>
+
+<ol>
+  <li>
+    <p>Open the <strong>Auto Price Training</strong> pipeline you created.</p>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for and place an <strong>Evaluate Model</strong> module to the canvas, under the <strong>Score Model</strong> module, and connect the output of the <strong>Score Model</strong> module to the <strong>Scored dataset</strong> (left) input of the <strong>Evaluate Model</strong> module.</p>
+  </li>
+  <li>
+    <p>Ensure your pipeline looks like this:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/evaluate.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/evaluate.png" alt="Screenshot of adding the Evaluate Model module to Score Model module."></a></p>
+  </li>
+  <li>
+    <p>Select <strong>Submit</strong>, and run the pipeline using the existing experiment named <strong>mslearn-auto-training</strong>.</p>
+  </li>
+  <li>
+    <p>Wait for the experiment run to complete.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/completed-job.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/completed-job.png" alt="Screenshot of a complete experiment run."></a></p>
+  </li>
+  <li>
+    <p>When the experiment run has completed, select <strong>Job detail</strong>, which will open another tab. Find and right click on the <strong>Evaluate Model</strong> module. Select <strong>Preview data</strong> and then <strong>Evaluation results</strong>.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/evaluate-model-help-1.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/evaluate-model-help-1.png" alt="Screenshot of location of evaluate model module."></a></p>
+  </li>
+  <li>In the <em>Evaluation_results</em> pane, review the regression performance metrics:
+    <ul>
+      <li><strong>Mean Absolute Error (MAE)</strong></li>
+      <li><strong>Root Mean Squared Error (RMSE)</strong></li>
+      <li><strong>Relative Squared Error (RSE)</strong></li>
+      <li><strong>Relative Absolute Error (RAE)</strong></li>
+      <li><strong>Coefficient of Determination (R<sup>2</sup>)</strong></li>
+    </ul>
+  </li>
+  <li>Close the <em>Evaluation_results</em> pane.</li>
+</ol>
+
+<p>When you’ve identified a model with evaluation metrics that meet your needs, you can prepare to use that model with new data.</p>
+
+<h2 id="create-and-run-an-inference-pipeline">Create and run an inference pipeline</h2>
+
+<ol>
+  <li>
+    <p>In Azure Machine Learning studio, expand the left-hand pane by selecting the three lines at the top left of the screen. Click on <strong>Jobs</strong> (under <strong>Assets</strong>) to view all of the jobs you have run. Select the experiment <strong>mslearn-auto-training</strong>, then select the <strong>mslearn-auto-training</strong> pipeline.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/jobs-tab.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/jobs-tab.png" alt="Screenshot of jobs on the left-hand menu. Select jobs and then select your experiment name."></a></p>
+  </li>
+  <li>
+    <p>Locate the menu above the canvas and click on <strong>Create inference pipeline</strong>. You may need to expand your screen to full and click on the three dots icon <strong>…</strong> on the top right hand corner of the screen in order to find <strong>Create inference pipeline</strong> in the menu.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/create-inference-pipeline.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/create-inference-pipeline.png" alt="Screenshot of location of create inference pipeline."></a></p>
+  </li>
+  <li>
+    <p>In the <strong>Create inference pipeline</strong> drop-down list, click <strong>Real-time inference pipeline</strong>. After a few seconds, a new version of your pipeline named <strong>Auto Price Training-real time inference</strong> will be opened.</p>
+
+    <p><em>If the pipeline doesn’t include <strong>Web Service Input</strong> and <strong>Web Service Output</strong> modules, go back to the <strong>Designer</strong> page and then reopen the <strong>Auto Price Training-real time inference</strong> pipeline.</em></p>
+  </li>
+  <li>
+    <p>Rename the new pipeline to <strong>Predict Auto Price</strong>, and then review the new pipeline. It contains a web service input for new data to be submitted, and a web service output to return results. Some of the transformations and training steps are a part of this pipeline. The trained model will be used to score the new data.</p>
+
+    <p>You’re going to make the following changes to the inference pipeline in the next steps #5-9:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/inference-changes.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/inference-changes.png" alt="Screenshot of an inference pipeline with changes indicated."></a></p>
+
+    <p>Use the image for reference as you modify the pipeline in the next steps.</p>
+  </li>
+  <li>
+    <p>The inference pipeline assumes that new data will match the schema of the original training data, so the <strong>Automobile price data (Raw)</strong> dataset from the training pipeline is included. However, this input data includes the <strong>price</strong> label that the model predicts, which is unintuitive to include in new car data for which a price prediction hasn’t yet been made. Delete this module and replace it with an <strong>Enter Data Manually</strong> module from the <strong>Data Input and Output</strong> section, containing the following CSV data, which includes feature values without labels for three cars (copy and paste the entire block of text):</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="language-CSV"> symboling,normalized-losses,make,fuel-type,aspiration,num-of-doors,body-style,drive-wheels,engine-location,wheel-base,length,width,height,curb-weight,engine-type,num-of-cylinders,engine-size,fuel-system,bore,stroke,compression-ratio,horsepower,peak-rpm,city-mpg,highway-mpg
+ 3,NaN,alfa-romero,gas,std,two,convertible,rwd,front,88.6,168.8,64.1,48.8,2548,dohc,four,130,mpfi,3.47,2.68,9,111,5000,21,27
+ 3,NaN,alfa-romero,gas,std,two,convertible,rwd,front,88.6,168.8,64.1,48.8,2548,dohc,four,130,mpfi,3.47,2.68,9,111,5000,21,27
+ 1,NaN,alfa-romero,gas,std,two,hatchback,rwd,front,94.5,171.2,65.5,52.4,2823,ohcv,six,152,mpfi,2.68,3.47,9,154,5000,19,26
+</code></pre>
+  </li>
+  <li>
+    <p>Connect the new <strong>Enter Data Manually</strong> module to the same <strong>dataset</strong> input of the <strong>Select Columns in Dataset</strong> module as the <strong>Web Service Input</strong>.</p>
+  </li>
+  <li>
+    <p>Now that you’ve changed the schema of the incoming data to exclude the <strong>price</strong> field, you need to remove any explicit uses of this field in the remaining modules. Select the <strong>Select Columns in Dataset</strong> module and then in the settings pane, edit the columns to remove the <strong>price</strong> field.</p>
+  </li>
+  <li>
+    <p>The inference pipeline includes the <strong>Evaluate Model</strong> module, which isn’t useful when predicting from new data, so delete this module.</p>
+  </li>
+  <li>
+    <p>The output from the <strong>Score Model</strong> module includes all of the input features and the predicted label. To modify the output to include only the prediction:</p>
+    <ul>
+      <li>Delete the connection between the <strong>Score Model</strong> module and the <strong>Web Service Output</strong>.</li>
+      <li>Add an <strong>Execute Python Script</strong> module from the <strong>Python Language</strong> section, replacing all of the default python script with the following code (which selects only the <strong>Scored Labels</strong> column and renames it to <strong>predicted_price</strong>):</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="language-Python hljs"><span class="hljs-keyword"><span class="hljs-keyword">import</span></span> pandas <span class="hljs-keyword"><span class="hljs-keyword">as</span></span> pd
+
+<span class="hljs-function"><span class="hljs-keyword"><span class="hljs-function"><span class="hljs-keyword">def</span></span></span><span class="hljs-function"> </span><span class="hljs-title"><span class="hljs-function"><span class="hljs-title">azureml_main</span></span></span><span class="hljs-params"><span class="hljs-function"><span class="hljs-params">(dataframe1 = None, dataframe2 = None)</span></span></span><span class="hljs-function">:</span></span>
+
+    scored_results = dataframe1[[<span class="hljs-string"><span class="hljs-string">'Scored Labels'</span></span>]]
+    scored_results.rename(columns={<span class="hljs-string"><span class="hljs-string">'Scored Labels'</span></span>:<span class="hljs-string"><span class="hljs-string">'predicted_price'</span></span>},
+                        inplace=<span class="hljs-keyword"><span class="hljs-keyword">True</span></span>)
+    <span class="hljs-keyword"><span class="hljs-keyword">return</span></span> scored_results
+</code></pre>
+
+<div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="hljs coffeescript">- Connect the output <span class="hljs-keyword"><span class="hljs-keyword">from</span></span> the **Score Model** <span class="hljs-built_in"><span class="hljs-built_in">module</span></span> to the **Dataset1** (left-most) input <span class="hljs-keyword"><span class="hljs-keyword">of</span></span> the **Execute Python Script**, <span class="hljs-keyword"><span class="hljs-keyword">and</span></span> connect the output <span class="hljs-keyword"><span class="hljs-keyword">of</span></span> the **Execute Python Script** <span class="hljs-built_in"><span class="hljs-built_in">module</span></span> to the **Web Service Output**.
+</code></pre>
+
+<ol>
+  <li>
+    <p>Verify that your pipeline looks similar to the following image:</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/inference-pipeline-lab.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/inference-pipeline-lab.png" alt="Screenshot of the automobile inference pipeline."></a></p>
+  </li>
+  <li>
+    <p>Submit the pipeline as a new experiment named <strong>mslearn-auto-inference</strong> on your compute cluster. The experiment may take a while to run.</p>
+  </li>
+  <li>
+    <p>When the pipeline has completed, select <strong>Job detail</strong>. In the new tab, right click on the <strong>Execute Python Script</strong> module. Select <strong>Preview data</strong> and then <strong>Result dataset</strong> to see the predicted prices for the three cars in the input data.</p>
+  </li>
+  <li>
+    <p>Close the visualization tab.</p>
+  </li>
+</ol>
+
+<p>Your inference pipeline predicts prices for cars based on their features. Now you’re ready to publish the pipeline so that client applications can use it.</p>
+
+<h2 id="deploy-model">Deploy model</h2>
+
+<p>After you’ve created and tested an inference pipeline for real-time inferencing, you can publish it as a service for client applications to use.</p>
+
+<blockquote>
+  <p><strong>Note</strong>
+In this exercise, you’ll deploy the web service to an Azure Container Instance (ACI). This type of compute is created dynamically, and is useful for development and testing. For production, you should create an <em>inference cluster</em>, which provides an Azure Kubernetes Service (AKS) cluster that provides better scalability and security.</p>
+</blockquote>
+
+<h2 id="deploy-a-service">Deploy a service</h2>
+
+<ol>
+  <li>
+    <p>View the <strong>Predict Auto Price</strong> inference pipeline you created in the previous unit.</p>
+  </li>
+  <li>
+    <p>Select <strong>Job detail</strong> on the left hand pane, which will open a new tab.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/completed-job-inference.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/completed-job-inference.png" alt="Screenshot of job details next to the completed job. "></a></p>
+  </li>
+  <li>
+    <p>In the new tab, select <strong>Deploy</strong>.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/deploy-screenshot.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/deploy-screenshot.png" alt="Screenshot of the deploy button for your Predict Auto Price inference pipeline."></a></p>
+  </li>
+  <li>In the configuration screen, select <strong>Deploy a new real-time endpoint</strong>, using the following settings:
+    <ul>
+      <li><strong>Name</strong>: predict-auto-price</li>
+      <li><strong>Description</strong>: Auto price regression</li>
+      <li><strong>Compute type</strong>: Azure Container Instance</li>
+    </ul>
+  </li>
+  <li>Wait a few minutes for the web service to be deployed. The deployment status is shown at the top left of the designer interface.</li>
+</ol>
+
+<h2 id="test-the-service">Test the service</h2>
+
+<ol>
+  <li>
+    <p>On the <strong>Endpoints</strong> page, open the <strong>predict-auto-price</strong> real-time endpoint.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/endpoints-lab.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/endpoints-lab.png" alt="Screenshot of the location of the Endpoints option on the left-hand pane."></a></p>
+  </li>
+  <li>
+    <p>When the <strong>predict-auto-price</strong> endpoint opens, select the <strong>Test</strong> tab. We will use it to test our model with new data. Delete the current data under <strong>Input data to test real-time endpoint</strong>. Copy and paste the below data into the data section:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock3" class="mt-0"><code class="language-json hljs"> {
+ <span class="hljs-attr"><span class="hljs-attr">"Inputs"</span></span>: {
+             <span class="hljs-attr"><span class="hljs-attr">"WebServiceInput0"</span></span>:
+             [
+                 {
+                     <span class="hljs-attr"><span class="hljs-attr">"symboling"</span></span>: <span class="hljs-number"><span class="hljs-number">3</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"normalized-losses"</span></span>: <span class="hljs-number"><span class="hljs-number">1.0</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"make"</span></span>: <span class="hljs-string"><span class="hljs-string">"alfa-romero"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"fuel-type"</span></span>: <span class="hljs-string"><span class="hljs-string">"gas"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"aspiration"</span></span>: <span class="hljs-string"><span class="hljs-string">"std"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"num-of-doors"</span></span>: <span class="hljs-string"><span class="hljs-string">"two"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"body-style"</span></span>: <span class="hljs-string"><span class="hljs-string">"convertible"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"drive-wheels"</span></span>: <span class="hljs-string"><span class="hljs-string">"rwd"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"engine-location"</span></span>: <span class="hljs-string"><span class="hljs-string">"front"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"wheel-base"</span></span>: <span class="hljs-number"><span class="hljs-number">88.6</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"length"</span></span>: <span class="hljs-number"><span class="hljs-number">168.8</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"width"</span></span>: <span class="hljs-number"><span class="hljs-number">64.1</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"height"</span></span>: <span class="hljs-number"><span class="hljs-number">48.8</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"curb-weight"</span></span>: <span class="hljs-number"><span class="hljs-number">2548</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"engine-type"</span></span>: <span class="hljs-string"><span class="hljs-string">"dohc"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"num-of-cylinders"</span></span>: <span class="hljs-string"><span class="hljs-string">"four"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"engine-size"</span></span>: <span class="hljs-number"><span class="hljs-number">130</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"fuel-system"</span></span>: <span class="hljs-string"><span class="hljs-string">"mpfi"</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"bore"</span></span>: <span class="hljs-number"><span class="hljs-number">3.47</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"stroke"</span></span>: <span class="hljs-number"><span class="hljs-number">2.68</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"compression-ratio"</span></span>: <span class="hljs-number"><span class="hljs-number">9</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"horsepower"</span></span>: <span class="hljs-number"><span class="hljs-number">111</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"peak-rpm"</span></span>: <span class="hljs-number"><span class="hljs-number">5000</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"city-mpg"</span></span>: <span class="hljs-number"><span class="hljs-number">21</span></span>,
+                     <span class="hljs-attr"><span class="hljs-attr">"highway-mpg"</span></span>: <span class="hljs-number"><span class="hljs-number">27</span></span>
+                 }
+             ]
+         },
+ <span class="hljs-attr"><span class="hljs-attr">"GlobalParameters"</span></span>: {}
+ }
+</code></pre>
+  </li>
+  <li>
+    <p>Select <strong>Test</strong>. On the right hand of the screen, you should see the output <strong>‘predicted_price’</strong>. The output is the predicted price for a vehicle with the particular input features specified in the data.</p>
+
+    <p><a href="./Azure Machine Model Regresi AI-900-AIFundamentals_files/test-interface.png" target="_blank"><img src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/test-interface.png" alt="Screenshot of the Test pane."></a></p>
+  </li>
+</ol>
+
+<p>Let’s review what you have done. You cleaned and transformed a dataset of automobile data, then used the car <em>features</em> to train a model. The model predicts the price of an automobile, which is the <em>label</em>.</p>
+
+<p>You also tested a service that is ready to be connected to a client application using the credentials in the <strong>Consume</strong> tab. We will end the lab here. You are welcome to continue to experiment with the service you just deployed.</p>
+
+<h2 id="clean-up">Clean-up</h2>
+
+<p>The web service you created is hosted in an <em>Azure Container Instance</em>. If you don’t intend to experiment with it further, you should delete the endpoint to avoid accruing unnecessary Azure usage. You should also stop the compute instance until you need it again.</p>
+
+<ol>
+  <li>
+    <p>In <a href="https://ml.azure.com/?azure-portal=true">Azure Machine Learning studio</a>, on the <strong>Endpoints</strong> tab, select the <strong>predict-auto-price</strong> endpoint. Then select <strong>Delete</strong> and confirm that you want to delete the endpoint.</p>
+  </li>
+  <li>
+    <p>On the <strong>Compute</strong> page, on the <strong>Compute clusters</strong> tab, select your compute cluster and then select <strong>Delete</strong>.</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p><strong>Note</strong>
+Stopping your compute ensures your subscription won’t be charged for compute resources. You will however be charged a small amount for data storage as long as the Azure Machine Learning workspace exists in your subscription. If you have finished exploring Azure Machine Learning, you can delete the Azure Machine Learning workspace and associated resources. However, if you plan to complete any other labs in this series, you will need to recreate it.</p>
+
+  <p>To delete your workspace:</p>
+
+  <ol>
+    <li>In the <a href="https://portal.azure.com/?azure-portal=true">Azure portal</a>, in the <strong>Resource groups</strong> page, open the resource group you specified when creating your Azure Machine Learning workspace.</li>
+    <li>Click <strong>Delete resource group</strong>, type the resource group name to confirm you want to delete it, and select <strong>Delete</strong>.</li>
+  </ol>
+</blockquote>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/AI-900-AIFundamentals" target="_blank" class="ml-2">
+                    MicrosoftLearning/AI-900-AIFundamentals
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/clipboard.min.js.download"></script>
+    <script src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/highlight.min.js.download"></script>
+    <script src="./Azure Machine Model Regresi AI-900-AIFundamentals_files/script.js.download"></script>
+
+
+
+</body></html>

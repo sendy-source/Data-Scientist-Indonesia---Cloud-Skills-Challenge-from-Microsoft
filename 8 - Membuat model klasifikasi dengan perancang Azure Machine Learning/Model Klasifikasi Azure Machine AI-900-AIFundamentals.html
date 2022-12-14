@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<!-- saved from url=(0107)https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            AI-900-AIFundamentals
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/vs.min.css">
+        <script src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-white" href="https://docs.microsoft.com/training/">
+                <img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;">
+            </a>
+            <span class="my-1 title text-black">Microsoft Learn</span>
+            <span class="ml-2"><a href="https://microsoftlearning.github.io/AI-900-AIFundamentals">≡</a></span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/AI-900-AIFundamentals">
+                AI-900-AIFundamentals
+            </a>
+            <a href="https://github.com/MicrosoftLearning/AI-900-AIFundamentals" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#create-an-azure-machine-learning-workspace">Create an Azure Machine Learning workspace</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#create-compute">Create compute</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#create-a-pipeline-in-designer">Create a pipeline in Designer</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#create-a-dataset">Create a dataset</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#add-transformations">Add transformations</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#run-the-pipeline">Run the pipeline</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#view-the-transformed-data">View the transformed data</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#add-training-modules">Add training modules</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#run-the-training-pipeline">Run the training pipeline</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#add-an-evaluate-model-module">Add an Evaluate Model module</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#create-an-inference-pipeline">Create an inference pipeline</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#deploy-a-service">Deploy a service</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#test-the-service">Test the service</a></li><li class="nav-item"><a class="nav-link active" href="https://microsoftlearning.github.io/AI-900-AIFundamentals/instructions/02b-create-classification-model.html#clean-up">Clean-up</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="explore-classification-with-azure-machine-learning-designer">Explore classification with Azure Machine Learning Designer</h1>
+
+<blockquote>
+  <p><strong>Note</strong>
+To complete this lab, you will need an <a href="https://azure.microsoft.com/free?azure-portal=true">Azure subscription</a> in which you have administrative access.</p>
+</blockquote>
+
+<h2 id="create-an-azure-machine-learning-workspace">Create an Azure Machine Learning workspace</h2>
+
+<ol>
+  <li>
+    <p>Sign into the <a href="https://portal.azure.com/?azure-portal=true">Azure portal</a> using your Microsoft credentials.</p>
+  </li>
+  <li>Select <strong>+ Create a resource</strong>, search for <em>Machine Learning</em>, and create a new <strong>Azure Machine Learning</strong> resource with an <em>Azure Machine Learning</em> plan. Use the following settings:
+    <ul>
+      <li><strong>Subscription</strong>: <em>Your Azure subscription</em>.</li>
+      <li><strong>Resource group</strong>: <em>Create or select a resource group</em>.</li>
+      <li><strong>Workspace name</strong>: <em>Enter a unique name for your workspace</em>.</li>
+      <li><strong>Region</strong>: <em>Select the closest geographical region</em>.</li>
+      <li><strong>Storage account</strong>: <em>Note the default new storage account that will be created for your workspace</em>.</li>
+      <li><strong>Key vault</strong>: <em>Note the default new key vault that will be created for your workspace</em>.</li>
+      <li><strong>Application insights</strong>: <em>Note the default new application insights resource that will be created for your workspace</em>.</li>
+      <li><strong>Container registry</strong>: None (<em>one will be created automatically the first time you deploy a model to a container</em>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Select <strong>Review + create</strong>, then select <strong>Create</strong>. Wait for your workspace to be created (it can take a few minutes), and then go to the deployed resource.</p>
+  </li>
+  <li>
+    <p>Select <strong>Launch studio</strong> (or open a new browser tab and navigate to <a href="https://ml.azure.com/?azure-portal=true">https://ml.azure.com</a>, and sign into Azure Machine Learning studio using your Microsoft account).</p>
+  </li>
+  <li>In Azure Machine Learning studio, you should see your newly created workspace. If that is not the case, click on <strong>Microsoft</strong> on the left-hand menu. Then from the new left-hand menu select <strong>Workspaces</strong>, where all the workspaces associated to your subscription are listed. Choose the one you created for this exercise.</li>
+</ol>
+
+<blockquote>
+  <p><strong>Note</strong>
+This module is one of many that make use of an Azure Machine Learning workspace, including the other modules in the <a href="https://docs.microsoft.com/learn/paths/create-no-code-predictive-models-azure-machine-learning/">Microsoft Azure AI Fundamentals: Explore visual tools for machine learning</a> learning path. If you are using your own Azure subscription, you may consider creating the workspace once and reusing it in other modules. Your Azure subscription will be charged a small amount for data storage as long as the Azure Machine Learning workspace exists in your subscription, so we recommend you delete the Azure Machine Learning workspace when it is no longer required.</p>
+</blockquote>
+
+<h2 id="create-compute">Create compute</h2>
+
+<ol>
+  <li>
+    <p>In <a href="https://ml.azure.com/?azure-portal=true">Azure Machine Learning studio</a>, select the three lines at the top left to view the various pages in the interface (you may need to maximize the size of your screen). You can use these pages in the left hand pane to manage the resources in your workspace. Select the <strong>Compute</strong> page (under <strong>Manage</strong>).</p>
+  </li>
+  <li>
+    <p>On the <strong>Compute</strong> page, select the <strong>Compute clusters</strong> tab, and add a new compute cluster with the following settings. You’ll use this to train a machine learning model:</p>
+    <ul>
+      <li><strong>Location</strong>: <em>Select the same as your workspace. If that location is not listed, choose the one closest to you</em>.</li>
+      <li><strong>Virtual machine tier</strong>: Dedicated</li>
+      <li><strong>Virtual machine type</strong>: CPU</li>
+      <li><strong>Virtual machine size</strong>:
+        <ul>
+          <li>Choose <strong>Select from all options</strong></li>
+          <li>Search for and select <strong>Standard_DS11_v2</strong></li>
+        </ul>
+      </li>
+      <li>Select <strong>Next</strong></li>
+      <li><strong>Compute name</strong>: <em>enter a unique name</em>.</li>
+      <li><strong>Minimum number of nodes</strong>: 0</li>
+      <li><strong>Maximum number of nodes</strong>: 2</li>
+      <li><strong>Idle seconds before scale down</strong>: 120</li>
+      <li><strong>Enable SSH access</strong>: Clear</li>
+      <li>Select <strong>Create</strong></li>
+    </ul>
+  </li>
+</ol>
+
+<blockquote>
+  <p><strong>Note</strong>
+Compute instances and clusters are based on standard Azure virtual machine images. For this module, the <em>Standard_DS11_v2</em> image is recommended to achieve the optimal balance of cost and performance. If your subscription has a quota that does not include this image, choose an alternative image; but bear in mind that a larger image may incur higher cost and a smaller image may not be sufficient to complete the tasks. Alternatively, ask your Azure administrator to extend your quota.</p>
+</blockquote>
+
+<p>The compute cluster will take some time to be created. You can move onto the next step while you wait.</p>
+
+<h2 id="create-a-pipeline-in-designer">Create a pipeline in Designer</h2>
+
+<p>To get started with Azure Machine Learning designer, first you must create a pipeline and add the dataset you want to work with.</p>
+
+<ol>
+  <li>
+    <p>In <a href="https://ml.azure.com/?azure-portal=true">Azure Machine Learning studio</a>, expand the left pane by selecting the three lines at the top left of the screen. View the <strong>Designer</strong> page (under <strong>Author</strong>), and select <strong>+</strong> to create a new pipeline.</p>
+  </li>
+  <li>
+    <p>At the top right-hand side of the screen, select <strong>Settings</strong>. If the <strong>Settings</strong> pane is not visible, select the wheel icon next to the pipeline name at the top.</p>
+  </li>
+  <li>
+    <p>In <strong>Settings</strong>, you must specify a compute target on which to run the pipeline. Under <strong>Select compute type</strong>, select <strong>Compute cluster</strong>. Then under <strong>Select Azure ML compute cluster</strong>, select the compute cluster you created previously.</p>
+  </li>
+  <li>
+    <p>In <strong>Settings</strong>, under <strong>Draft Details</strong>, change the draft name (<strong>Pipeline-Created-on-<em>date</em></strong>) to <strong>Diabetes Training</strong>.</p>
+  </li>
+  <li>
+    <p>Select the close icon on the top right of the <strong>Settings</strong> pane to close the pane, then select <strong>Save</strong>.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/create-pipeline-help.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/create-pipeline-help.png" alt="Screenshot of the Machine Learning Studio Settings pane."></a></p>
+  </li>
+</ol>
+
+<h2 id="create-a-dataset">Create a dataset</h2>
+
+<ol>
+  <li>
+    <p>In <a href="https://ml.azure.com/?azure-portal=true">Azure Machine Learning studio</a>, expand the left pane by selecting the three lines at the top left of the screen. View the <strong>Data</strong> page (under <strong>Assets</strong>). The Data page contains specific data files or tables that you plan to work with in Azure ML. You can create datasets from this page as well.</p>
+  </li>
+  <li>On the <strong>Data</strong> page, under the <strong>Data assets</strong> tab, select <strong>Create</strong>. Then configure a data asset with the following settings:
+    <ul>
+      <li><strong>Data type</strong>:
+        <ul>
+          <li><strong>Name</strong>: diabetes-data</li>
+          <li><strong>Description</strong>: Diabetes data</li>
+          <li><strong>Dataset type</strong>: Tabular</li>
+        </ul>
+      </li>
+      <li><strong>Data source</strong>: From Web Files</li>
+      <li><strong>Web URL</strong>:
+        <ul>
+          <li><strong>Web URL</strong>: https://aka.ms/diabetes-data</li>
+          <li><strong>Skip data validation</strong>: <em>do not select</em></li>
+        </ul>
+      </li>
+      <li><strong>Settings</strong>:
+        <ul>
+          <li><strong>File format</strong>: Delimited</li>
+          <li><strong>Delimiter</strong>: Comma</li>
+          <li><strong>Encoding</strong>: UTF-8</li>
+          <li><strong>Column headers</strong>: Only first file has headers</li>
+          <li><strong>Skip rows</strong>: None</li>
+          <li><strong>Dataset contains multi-line data</strong>: <em>do not select</em></li>
+        </ul>
+      </li>
+      <li><strong>Schema</strong>:
+        <ul>
+          <li>Include all columns other than <strong>Path</strong></li>
+          <li>Review the automatically detected types</li>
+        </ul>
+      </li>
+      <li><strong>Review</strong>
+        <ul>
+          <li>Select <strong>Create</strong></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>After the dataset has been created, open it and view the <strong>Explore</strong> page to see a sample of the data. This data represents details from patients who have been tested for diabetes.</li>
+</ol>
+
+<h3 id="load-data-to-canvas">Load data to canvas</h3>
+
+<ol>
+  <li>
+    <p>Return to your pipeline by selecting <strong>Designer</strong> on the left-hand menu. On the <strong>Designer</strong> page, select the <strong>Diabetes Training</strong> pipeline.</p>
+  </li>
+  <li>
+    <p>Then in the project, next to the pipeline name on the left, select the arrows icon to expand the panel if it is not already expanded. The panel should open by default to the <strong>Asset library</strong> pane, indicated by the books icon at the top of the panel. Note that there is a search bar to locate assets. Notice two buttons, <strong>Data</strong> and <strong>Component</strong>.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/designer-asset-library-data.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/designer-asset-library-data.png" alt="Screenshot of location of designer asset library, search bar, and data icon."></a></p>
+  </li>
+  <li>
+    <p>Click on <strong>Data</strong>. Search for and place the <strong>diabetes-data</strong> dataset onto the canvas.</p>
+  </li>
+  <li>
+    <p>Right-click (Ctrl+click on a Mac) the <strong>diabetes-data</strong> dataset on the canvas, and click on <strong>Preview data</strong>.</p>
+  </li>
+  <li>
+    <p>Review the schema of the data in the <em>Profile</em> tab, noting that you can see the distributions of the various columns as histograms.</p>
+  </li>
+  <li>
+    <p>Scroll down and select the column heading for the <strong>Diabetic</strong> column, and note that it contains two values <strong>0</strong> and <strong>1</strong>. These values represent the two possible classes for the <em>label</em> that your model will predict, with a value of <strong>0</strong> meaning that the patient does not have diabetes, and a value of <strong>1</strong> meaning that the patient is diabetic.</p>
+  </li>
+  <li>
+    <p>Scroll back up and review the other columns, which represent the <em>features</em> that will be used to predict the label. Note that most of these columns are numeric, but each feature is on its own scale. For example, <strong>Age</strong> values range from 21 to 77, while <strong>DiabetesPedigree</strong> values range from 0.078 to 2.3016. When training a machine learning model, it is sometimes possible for larger values to dominate the resulting predictive function, reducing the influence of features that on a smaller scale. Typically, data scientists mitigate this possible bias by <em>normalizing</em> the numeric columns so they’re on the similar scales.</p>
+  </li>
+  <li>
+    <p>Close the <strong>diabetes-data result visualization</strong> tab so that you can see the dataset on the canvas like this:</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/diabetes-data.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/diabetes-data.png" alt="Screenshot of the diabetes-data dataset on the designer canvas."></a></p>
+  </li>
+</ol>
+
+<h2 id="add-transformations">Add transformations</h2>
+
+<p>Before you can train a model, you typically need to apply some pre-processing transformations to the data.</p>
+
+<ol>
+  <li>
+    <p>In the <strong>Asset library</strong> pane on the left, click on <strong>Component</strong>, which contain a wide range of modules you can use for data transformation and model training. You can also use the search bar to quickly locate modules.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/designer-asset-library-components.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/designer-asset-library-components.png" alt="Screenshot of location of designer asset library, search bar, and components icon."></a></p>
+  </li>
+  <li>
+    <p>Find the <strong>Normalize Data</strong> module and place it on the canvas, below the <strong>diabetes-data</strong> dataset. Then connect the output from the bottom of the <strong>diabetes-data</strong> dataset to the input at the top of the <strong>Normalize Data</strong> module, like this:</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/dataset-normalize.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/dataset-normalize.png" alt="Screenshot of a pipeline with the dataset connected to a Normalize Data module."></a></p>
+  </li>
+  <li>
+    <p>Double-click the <strong>Normalize Data</strong> module to view its settings, noting that it requires you to specify the transformation method and the columns to be transformed.</p>
+  </li>
+  <li>
+    <p>Set the <em>Transformation method</em> to <strong>MinMax</strong> and the <em>Use 0 for constant columns when checked</em> to <strong>True</strong>. Edit the columns to include the following columns by name, as shown in the image:</p>
+    <ul>
+      <li><strong>Pregnancies</strong></li>
+      <li><strong>PlasmaGlucose</strong></li>
+      <li><strong>DiastolicBloodPressure</strong></li>
+      <li><strong>TricepsThickness</strong></li>
+      <li><strong>SerumInsulin</strong></li>
+      <li><strong>BMI</strong></li>
+      <li><strong>DiabetesPedigree</strong></li>
+      <li><strong>Age</strong></li>
+    </ul>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/normalize-data.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/normalize-data.png" alt="Screenshot of the columns selected for normalization."></a></p>
+  </li>
+</ol>
+
+<p>The data transformation is normalizing the numeric columns to put them on the same scale, which should help prevent columns with large values from dominating model training. You’d usually apply a whole bunch of pre-processing transformations like this to prepare your data for training, but we’ll keep things simple in this exercise.</p>
+
+<h2 id="run-the-pipeline">Run the pipeline</h2>
+
+<p>To apply your data transformations, you need to run the pipeline as an experiment.</p>
+
+<ol>
+  <li>
+    <p>Select <strong>Submit</strong>, and run the pipeline as a new experiment named <strong>mslearn-diabetes-training</strong> on your compute cluster.</p>
+  </li>
+  <li>
+    <p>Wait a few minutes for the run to finish.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/completed-job.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/completed-job.png" alt="Screenshot of designer asset library with the completed job and job details button below."></a></p>
+
+    <p>Notice that the left hand panel is now on the <strong>Submitted Jobs</strong> pane. You will know when the run is complete because the status of the job will change to <strong>Completed</strong>.</p>
+  </li>
+</ol>
+
+<h2 id="view-the-transformed-data">View the transformed data</h2>
+
+<ol>
+  <li>
+    <p>When the run has completed, the dataset is now prepared for model training. Click on <strong>Job detail</strong>. You will be taken to a new tab.</p>
+  </li>
+  <li>
+    <p>Right-click (Ctrl+click on a Mac) the <strong>Normalize Data</strong> module on the canvas, and click on <strong>Preview data</strong>. Select <strong>Transformed dataset</strong>.</p>
+  </li>
+  <li>
+    <p>View the data, noting that the numeric columns you selected have been normalized to a common scale.</p>
+  </li>
+  <li>
+    <p>Close the normalized data result visualization. Return to the previous tab.</p>
+  </li>
+</ol>
+
+<p>After you’ve used data transformations to prepare the data, you can use it to train a machine learning model.</p>
+
+<h2 id="add-training-modules">Add training modules</h2>
+
+<p>It’s common practice to train the model using a subset of the data, while holding back some data with which to test the trained model. This enables you to compare the labels that the model predicts with the actual known labels in the original dataset.</p>
+
+<p>In this exercise, you’re going to work through steps to extend the <strong>Diabetes Training</strong> pipeline as shown here:</p>
+
+<p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/train-score-pipeline.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/train-score-pipeline.png" alt="Screenshot of how to split data, then train with logistic regression and score."></a></p>
+
+<p>Follow the steps below, using the image above for reference as you add and configure the required modules.</p>
+
+<ol>
+  <li>
+    <p>Open the <strong>Diabetes Training</strong> pipeline you created in the previous unit if it’s not already open.</p>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong> pane on the left, in <strong>Component</strong>, search for and place a <strong>Split Data</strong> module onto the canvas under the <strong>Normalize Data</strong> module. Then connect the <em>Transformed Dataset</em> (left) output of the <strong>Normalize Data</strong> module to the input of the <strong>Split Data</strong> module.</p>
+
+    <blockquote>
+      <p><strong>Tip</strong>
+Use the search bar to quickly locate modules.</p>
+    </blockquote>
+  </li>
+  <li>Select the <strong>Split Data</strong> module, and configure its settings as follows:
+    <ul>
+      <li><strong>Splitting mode</strong>: Split Rows</li>
+      <li><strong>Fraction of rows in the first output dataset</strong>: 0.7</li>
+      <li><strong>Randomized split</strong>: True</li>
+      <li><strong>Random seed</strong>: 123</li>
+      <li><strong>Stratified split</strong>: False</li>
+    </ul>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for and place a <strong>Train Model</strong> module to the canvas, under the <strong>Split Data</strong> module. Then connect the <em>Results dataset1</em> (left) output of the <strong>Split Data</strong> module to the <em>Dataset</em> (right) input of the <strong>Train Model</strong> module.</p>
+  </li>
+  <li>
+    <p>The model we’re training will predict the <strong>Diabetic</strong> value, so select the <strong>Train Model</strong> module and modify its settings to set the <strong>Label column</strong> to <strong>Diabetic</strong>.</p>
+
+    <p>The <strong>Diabetic</strong> label the model will predict is a class (0 or 1), so we need to train the model using a <em>classification</em> algorithm. Specifically, there are two possible classes, so we need a <em>binary classification</em> algorithm.</p>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for and place a <strong>Two-Class Logistic Regression</strong> module to the canvas, to the left of the <strong>Split Data</strong> module and above the <strong>Train Model</strong> module. Then connect its output to the <strong>Untrained model</strong> (left) input of the <strong>Train Model</strong> module.</p>
+
+    <p>To test the trained model, we need to use it to <em>score</em> the validation dataset we held back when we split the original data - in other words, predict labels for the features in the validation dataset.</p>
+  </li>
+  <li>In the <strong>Asset library</strong>, search for and place a <strong>Score Model</strong> module to the canvas, below the <strong>Train Model</strong> module. Then connect the output of the <strong>Train Model</strong> module to the <strong>Trained model</strong> (left) input of the <strong>Score Model</strong> module; and connect the <strong>Results dataset2</strong> (right) output of the <strong>Split Data</strong> module to the <strong>Dataset</strong> (right) input of the <strong>Score Model</strong> module.</li>
+</ol>
+
+<h2 id="run-the-training-pipeline">Run the training pipeline</h2>
+
+<p>Now you’re ready to run the training pipeline and train the model.</p>
+
+<ol>
+  <li>
+    <p>Select <strong>Submit</strong>, and run the pipeline using the existing experiment named <strong>mslearn-diabetes-training</strong>.</p>
+  </li>
+  <li>
+    <p>Wait for the experiment run to finish. This may take 5 minutes or more.</p>
+  </li>
+  <li>
+    <p>When the experiment run has finished, select <strong>Job detail</strong>. You’ll be directed to a new tab.</p>
+  </li>
+  <li>
+    <p>On the new tab, right-click (Ctrl+click on a Mac) the <strong>Score Model</strong> module on the canvas, and click on <strong>Preview data</strong>. Select <strong>Scored dataset</strong> to view the results.</p>
+  </li>
+  <li>
+    <p>Scroll to the right, and note that next to the <strong>Diabetic</strong> column (which contains the known true values of the label) there is a new column named <strong>Scored Labels</strong>, which contains the predicted label values, and a <strong>Scored Probabilities</strong> column containing a probability value between 0 and 1. This indicates the probability of a <em>positive</em> prediction, so probabilities greater than 0.5 result in a predicted label of <strong><em>1</em></strong> (diabetic), while probabilities between 0 and 0.5 result in a predicted label of <strong><em>0</em></strong> (not diabetic).</p>
+  </li>
+  <li>
+    <p>Close the <strong>Score Model result visualization</strong> tab.</p>
+  </li>
+</ol>
+
+<p>The model is predicting values for the <strong>Diabetic</strong> label, but how reliable are its predictions? To assess that, you need to evaluate the model.</p>
+
+<p>The validation data you held back and used to score the model includes the known values for the label. So to validate the model, you can compare the true values for the label to the label values that were predicted when you scored the validation dataset. Based on this comparison, you can calculate various metrics that describe how well the model performs.</p>
+
+<h2 id="add-an-evaluate-model-module">Add an Evaluate Model module</h2>
+
+<ol>
+  <li>
+    <p>Open the <strong>Diabetes Training</strong> pipeline you created.</p>
+  </li>
+  <li>
+    <p>In the <strong>Asset library</strong>, search for and place an <strong>Evaluate Model</strong> module to the canvas, under the <strong>Score Model</strong> module, and connect the output of the <strong>Score Model</strong> module to the <strong>Scored dataset</strong> (left) input of the <strong>Evaluate Model</strong> module.</p>
+  </li>
+  <li>
+    <p>Ensure your pipeline looks like this:</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/evaluate-pipeline.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/evaluate-pipeline.png" alt="Screenshot of the Evaluate Model module added to Score Model module."></a></p>
+  </li>
+  <li>
+    <p>Select <strong>Submit</strong>, and run the pipeline using the existing experiment named <strong>mslearn-diabetes-training</strong>.</p>
+  </li>
+  <li>
+    <p>Wait for the experiment run to finish.</p>
+  </li>
+  <li>
+    <p>When the experiment run has finished, select <strong>Job detail</strong>. You’ll be directed to a new tab.</p>
+  </li>
+  <li>
+    <p>On the new tab, right-click (Ctrl+click on a Mac) the <strong>Evaluate Model</strong> module on the canvas, and click on <strong>Preview data</strong>. Select <strong>Evaluation results</strong> to view the performance metrics. These metrics can help data scientists assess how well the model predicts based on the validation data.</p>
+  </li>
+  <li>
+    <p>Scroll down to view the <em>confusion matrix</em> for the model. Observe the predicted and actual value counts for each possible class.</p>
+  </li>
+  <li>Review the metrics to the left of the confusion matrix, which include:
+    <ul>
+      <li><strong>Accuracy</strong>: In other words, what proportion of diabetes predictions did the model get right?</li>
+      <li><strong>Precision</strong>: In other words, out of all the patients that <em>the model predicted</em> as having diabetes, the percentage of time the model is correct.</li>
+      <li><strong>Recall</strong>:  In other words, out of all the patients <em>who actually have</em> diabetes, how many diabetic cases did the model identify correctly?</li>
+      <li><strong>F1 Score</strong></li>
+    </ul>
+  </li>
+  <li>
+    <p>Use the <strong>Threshold</strong> slider located above the list of metrics. Try moving the threshold slider and observe the effect on the confusion matrix. If you move it all the way to the left (0), the Recall metric becomes 1, and if you move it all the way to the right (1), the Recall metric becomes 0.</p>
+  </li>
+  <li>
+    <p>Look above the Threshold slider at the <strong>ROC curve</strong> and <strong>AUC</strong> metric listed with the other metrics below. To get an idea of how this area represents the performance of the model, imagine a straight diagonal line from the bottom left to the top right of the ROC chart. This represents the expected performance if you just guessed or flipped a coin for each patient - you could expect to get around half of them right, and half of them wrong, so the area under the diagonal line represents an AUC of 0.5. If the AUC for your model is higher than this for a binary classification model, then the model performs better than a random guess.</p>
+  </li>
+  <li>Close the <strong>Evaluate Model result visualization</strong> tab.</li>
+</ol>
+
+<p>The performance of this model isn’t all that great, partly because we performed only minimal feature engineering and pre-processing. You could try a different classification algorithm, such as <strong>Two-Class Decision Forest</strong>, and compare the results. You can connect the outputs of the <strong>Split Data</strong> module to multiple <strong>Train Model</strong> and <strong>Score Model</strong> modules, and you can connect a second <strong>Score Model</strong> module to the <strong>Evaluate Model</strong> module to see a side-by-side comparison. The point of the exercise is simply to introduce you to classification and the Azure Machine Learning designer interface, not to train a perfect model!</p>
+
+<h2 id="create-an-inference-pipeline">Create an inference pipeline</h2>
+
+<ol>
+  <li>
+    <p>In Azure Machine Learning studio, expand the left-hand pane by selecting the three lines at the top left of the screen. Click on <strong>Jobs</strong> (under <strong>Assets</strong>) to view all of the jobs you have run. Select the experiment <strong>mslearn-diabetes-training</strong>, then select the <strong>Diabetes Training</strong> pipeline.</p>
+  </li>
+  <li>
+    <p>Locate the menu above the canvas and click on <strong>Create inference pipeline</strong>. You may need to expand your screen to full and click on the three dots icon <strong>…</strong> on the top right hand corner of the screen in order to find <strong>Create inference pipeline</strong> in the menu.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/create-inference-pipeline.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/create-inference-pipeline.png" alt="Screenshot of location of create inference pipeline."></a></p>
+  </li>
+  <li>
+    <p>In the <strong>Create inference pipeline</strong> drop-down list, click <strong>Real-time inference pipeline</strong>. After a few seconds, a new version of your pipeline named <strong>Diabetes Training-real time inference</strong> will be opened.</p>
+  </li>
+  <li>
+    <p>Navigate to <strong>Settings</strong> on the upper right hand menu. Under <strong>Draft details</strong>, rename the new pipeline to <strong>Predict Diabetes</strong>, and then review the new pipeline. Some of the transformations and training steps are a part of this pipeline. The trained model will be used to score the new data. The pipeline also contains a web service output to return results.</p>
+
+    <p>You’re going to make the following changes to the inference pipeline:</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/inference-changes.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/inference-changes.png" alt="Screenshot of an inference pipeline with changes indicated."></a></p>
+
+    <ul>
+      <li>Add a <strong>web service input</strong> component for new data to be submitted.</li>
+      <li>Replace the <strong>diabetes-data</strong> dataset with an <strong>Enter Data Manually</strong> module that doesn’t include the label column (<strong>Diabetic</strong>).</li>
+      <li>Remove the <strong>Evaluate Model</strong> module.</li>
+      <li>Insert an <strong>Execute Python Script</strong> module before the web service output to return only the patient ID, predicted label value, and probability.</li>
+    </ul>
+  </li>
+  <li>
+    <p>The pipeline does not automatically include a <strong>Web Service Input</strong> component for models created from custom data sets. Search for a <strong>Web Service Input</strong> component from the asset library and place it at the top of the pipeline. Connect the output of the <strong>Web Service Input</strong> component to the right-side input of the <strong>Apply Transformation</strong> component that is already on the canvas.</p>
+  </li>
+  <li>
+    <p>The inference pipeline assumes that new data will match the schema of the original training data, so the <strong>diabetes-data</strong> dataset from the training pipeline is included. However, this input data includes the <strong>Diabetic</strong> label that the model predicts, which is not included in new patient data for which a diabetes prediction hasn’t yet been made. Delete this module and replace it with an <strong>Enter Data Manually</strong> module, containing the following CSV data, which includes feature values without labels for three new patient observations:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="language-CSV"> PatientID,Pregnancies,PlasmaGlucose,DiastolicBloodPressure,TricepsThickness,SerumInsulin,BMI,DiabetesPedigree,Age
+ 1882185,9,104,51,7,24,27.36983156,1.350472047,43
+ 1662484,6,73,61,35,24,18.74367404,1.074147566,75
+ 1228510,4,115,50,29,243,34.69215364,0.741159926,59
+</code></pre>
+  </li>
+  <li>
+    <p>Connect the new <strong>Enter Data Manually</strong> module to the same <strong>Dataset</strong> input of the <strong>Apply Transformation</strong> module as the <strong>Web Service Input</strong>.</p>
+  </li>
+  <li>
+    <p>The inference pipeline includes the <strong>Evaluate Model</strong> module, which isn’t useful when predicting from new data, so delete this module.</p>
+  </li>
+  <li>
+    <p>The output from the <strong>Score Model</strong> module includes all of the input features and the predicted label and probability score. To limit the output to only the prediction and probability:</p>
+    <ul>
+      <li>Delete the connection between the <strong>Score Model</strong> module and the <strong>Web Service Output</strong>.</li>
+      <li>Add an <strong>Execute Python Script</strong> module, replacing all of the default python script with the following code (which selects only the <strong>PatientID</strong>, <strong>Scored Labels</strong> and <strong>Scored Probabilities</strong> columns and renames them appropriately):</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="language-Python hljs"><span class="hljs-keyword"><span class="hljs-keyword">import</span></span> pandas <span class="hljs-keyword"><span class="hljs-keyword">as</span></span> pd
+
+<span class="hljs-function"><span class="hljs-keyword"><span class="hljs-function"><span class="hljs-keyword">def</span></span></span><span class="hljs-function"> </span><span class="hljs-title"><span class="hljs-function"><span class="hljs-title">azureml_main</span></span></span><span class="hljs-params"><span class="hljs-function"><span class="hljs-params">(dataframe1 = None, dataframe2 = None)</span></span></span><span class="hljs-function">:</span></span>
+
+    scored_results = dataframe1[[<span class="hljs-string"><span class="hljs-string">'PatientID'</span></span>, <span class="hljs-string"><span class="hljs-string">'Scored Labels'</span></span>, <span class="hljs-string"><span class="hljs-string">'Scored Probabilities'</span></span>]]
+    scored_results.rename(columns={<span class="hljs-string"><span class="hljs-string">'Scored Labels'</span></span>:<span class="hljs-string"><span class="hljs-string">'DiabetesPrediction'</span></span>,
+                                <span class="hljs-string"><span class="hljs-string">'Scored Probabilities'</span></span>:<span class="hljs-string"><span class="hljs-string">'Probability'</span></span>},
+                        inplace=<span class="hljs-keyword"><span class="hljs-keyword">True</span></span>)
+    <span class="hljs-keyword"><span class="hljs-keyword">return</span></span> scored_results
+</code></pre>
+
+<ol>
+  <li>
+    <p>Connect the output from the <strong>Score Model</strong> module to the <strong>Dataset1</strong> (left-most) input of the <strong>Execute Python Script</strong>, and connect the output of the <strong>Execute Python Script</strong> module to the <strong>Web Service Output</strong>.</p>
+  </li>
+  <li>
+    <p>Verify that your pipeline looks similar to the following image:</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/visual-inference.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/visual-inference.png" alt="Screenshot of a complete inference pipeline."></a></p>
+  </li>
+  <li>
+    <p>Run the pipeline as a new experiment named <strong>mslearn-diabetes-inference</strong> on your compute cluster. The experiment may take a while to run.</p>
+  </li>
+  <li>
+    <p>When the pipeline has completed, select <strong>Job detail</strong>. In the new tab, right click the <strong>Execute Python Script</strong> module. Select the <strong>Preview data</strong> and select <strong>Result dataset</strong> to see the predicted labels and probabilities for the three patient observations in the input data.</p>
+  </li>
+</ol>
+
+<p>Your inference pipeline predicts whether or not patients are at risk for diabetes based on their features. Now you’re ready to publish the pipeline so that client applications can use it.</p>
+
+<p>After you’ve created and tested an inference pipeline for real-time inferencing, you can publish it as a service for client applications to use.</p>
+
+<blockquote>
+  <p><strong>Note</strong>
+In this exercise, you’ll deploy the web service to an Azure Container Instance (ACI). This type of compute is created dynamically, and is useful for development and testing. For production, you should create an <em>inference cluster</em>, which provide an Azure Kubernetes Service (AKS) cluster that provides better scalability and security.</p>
+</blockquote>
+
+<h2 id="deploy-a-service">Deploy a service</h2>
+
+<ol>
+  <li>
+    <p>View the <strong>Predict Diabetes</strong> inference pipeline you created in the previous unit.</p>
+  </li>
+  <li>
+    <p>Select <strong>Job detail</strong> on the left hand pane. This will open up another window.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/completed-job-inference.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/completed-job-inference.png" alt="Screenshot of job details next to the completed job."></a></p>
+  </li>
+  <li>
+    <p>In the new window, select <strong>Deploy</strong>.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/deploy-screenshot.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/deploy-screenshot.png" alt="Screenshot of the deploy button for your Predict Auto Price inference pipeline."></a></p>
+  </li>
+  <li>At the top right, select <strong>Deploy</strong>, and deploy a <strong>new real-time endpoint</strong>, using the following settings:
+    <ul>
+      <li><strong>Name</strong>: predict-diabetes</li>
+      <li><strong>Description</strong>: Classify diabetes</li>
+      <li><strong>Compute type</strong>: Azure Container Instance</li>
+    </ul>
+  </li>
+  <li>Wait for the web service to be deployed - this can take several minutes. The deployment status is shown at the top left of the designer interface.</li>
+</ol>
+
+<h2 id="test-the-service">Test the service</h2>
+
+<ol>
+  <li>
+    <p>On the <strong>Endpoints</strong> page, open the <strong>predict-diabetes</strong> real-time endpoint.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/endpoints-screenshot.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/endpoints-screenshot.png" alt="Screenshot of the location of the Endpoints option on the left-hand pane."></a></p>
+  </li>
+  <li>
+    <p>When the <strong>predict-diabetes</strong> endpoint opens, select the <strong>Test</strong> tab. We will use it to test our model with new data. Delete the current data under <strong>Input data to test real-time endpoint</strong>. Copy and paste the below data into the data section:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="language-JSON hljs"> {
+   <span class="hljs-attr"><span class="hljs-attr">"Inputs"</span></span>: {
+     <span class="hljs-attr"><span class="hljs-attr">"input1"</span></span>:
+       [
+         { <span class="hljs-attr"><span class="hljs-attr">"PatientID"</span></span>: <span class="hljs-number"><span class="hljs-number">1882185</span></span>,
+           <span class="hljs-attr"><span class="hljs-attr">"Pregnancies"</span></span>: <span class="hljs-number"><span class="hljs-number">9</span></span>,
+           <span class="hljs-attr"><span class="hljs-attr">"PlasmaGlucose"</span></span>: <span class="hljs-number"><span class="hljs-number">104</span></span>,
+           <span class="hljs-attr"><span class="hljs-attr">"DiastolicBloodPressure"</span></span>: <span class="hljs-number"><span class="hljs-number">51</span></span>,
+           <span class="hljs-attr"><span class="hljs-attr">"TricepsThickness"</span></span>: <span class="hljs-number"><span class="hljs-number">7</span></span>,
+           <span class="hljs-attr"><span class="hljs-attr">"SerumInsulin"</span></span>: <span class="hljs-number"><span class="hljs-number">24</span></span>,
+           <span class="hljs-attr"><span class="hljs-attr">"BMI"</span></span>: <span class="hljs-number"><span class="hljs-number">27.36983156</span></span>,
+           <span class="hljs-attr"><span class="hljs-attr">"DiabetesPedigree"</span></span>: <span class="hljs-number"><span class="hljs-number">1.3504720469999998</span></span>,
+           <span class="hljs-attr"><span class="hljs-attr">"Age"</span></span>: <span class="hljs-number"><span class="hljs-number">43</span></span> }
+         ]
+       },
+   <span class="hljs-attr"><span class="hljs-attr">"GlobalParameters"</span></span>:  {}
+ }
+</code></pre>
+
+    <blockquote>
+      <p><strong>Note</strong>
+The JSON above defines features for a patient, and uses the <strong>predict-diabetes</strong> service you created to predict a diabetes diagnosis.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Select <strong>Test</strong>. On the right hand of the screen, you should see the output <strong>‘DiabetesPrediction’</strong>. The output is 1 if the patient is predicted to have diabetes, and 0 if the patient is predicted not to have diabetes.</p>
+
+    <p><a href="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/test-interface.png" target="_blank"><img src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/test-interface.png" alt="Screenshot of the Test pane."></a></p>
+
+    <p>You have just tested a service that is ready to be connected to a client application using the credentials in the <strong>Consume</strong> tab. We will end the lab here. You are welcome to continue to experiment with the service you just deployed.</p>
+  </li>
+</ol>
+
+<h2 id="clean-up">Clean-up</h2>
+
+<p>The web service you created is hosted in an <em>Azure Container Instance</em>. If you don’t intend to experiment with it further, you should delete the endpoint to avoid accruing unnecessary Azure usage.</p>
+
+<ol>
+  <li>
+    <p>In <a href="https://ml.azure.com/?azure-portal=true">Azure Machine Learning studio</a>, on the <strong>Endpoints</strong> tab, select the <strong>predict-diabetes</strong> endpoint. Then select <strong>Delete</strong> and confirm that you want to delete the endpoint.</p>
+  </li>
+  <li>
+    <p>On the <strong>Compute</strong> page, on the <strong>Compute clusters</strong> tab, select your compute cluster and then select <strong>Delete</strong>.</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p><strong>Note</strong>
+Stopping your compute ensures your subscription won’t be charged for compute resources. You will however be charged a small amount for data storage as long as the Azure Machine Learning workspace exists in your subscription. If you have finished exploring Azure Machine Learning, you can delete the Azure Machine Learning workspace and associated resources. However, if you plan to complete any other labs in this series, you will need to recreate it.</p>
+
+  <p>To delete your workspace:</p>
+
+  <ol>
+    <li>In the <a href="https://portal.azure.com/?azure-portal=true">Azure portal</a>, in the <strong>Resource groups</strong> page, open the resource group you specified when creating your Azure Machine Learning workspace.</li>
+    <li>Click <strong>Delete resource group</strong>, type the resource group name to confirm you want to delete it, and select <strong>Delete</strong>.</li>
+  </ol>
+</blockquote>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/AI-900-AIFundamentals" target="_blank" class="ml-2">
+                    MicrosoftLearning/AI-900-AIFundamentals
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/clipboard.min.js.download"></script>
+    <script src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/highlight.min.js.download"></script>
+    <script src="./Model Klasifikasi Azure Machine AI-900-AIFundamentals_files/script.js.download"></script>
+
+
+
+</body></html>
